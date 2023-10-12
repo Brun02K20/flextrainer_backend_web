@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-const videosAttributes = {
+const cuerpoZonasAttributes = {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,19 +10,15 @@ const videosAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    url: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
 };
 
-const videosMethods = {
+const cuerpoZonasMethods = {
     timestamps: false
 };
 
-const VideosModel = {
-    videosAttributes,
-    videosMethods
+const CuerpoZonasModel = {
+    cuerpoZonasAttributes,
+    cuerpoZonasMethods
 };
 
-export { VideosModel }
+export { CuerpoZonasModel }

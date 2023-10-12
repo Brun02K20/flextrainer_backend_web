@@ -3,7 +3,7 @@ import app from "./app.js";
 const PORT = process.env.PORT || 4001;
 
 app.get("/", (req, res) => {
-    const htmlResponse = '<html><head><title>Backend</title></head><body>Para probarla</body></html>';
+    const htmlResponse = '<html><head><title>Flex-Backend</title></head><body>FUNCOOOO, VAMO BOCAAA</body></html>';
     res.send(htmlResponse);
 });
 

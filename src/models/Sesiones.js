@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-const cuerpoAreasAttributes = {
+const sesionesAttributes = {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,19 +10,19 @@ const cuerpoAreasAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    idEjercicio: {
+    idPlan: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 };
 
-const cuerpoAreasMethods = {
+const sesionesMethods = {
     timestamps: false
 };
 
-const CuerpoAreasModel = {
-    cuerpoAreasAttributes,
-    cuerpoAreasMethods
+const SesionesModel = {
+    sesionesAttributes,
+    sesionesMethods
 };
 
-export { CuerpoAreasModel }
+export { SesionesModel }

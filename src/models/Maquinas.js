@@ -10,7 +10,7 @@ const maquinasAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    pesoLimite: {
+    peso: {
         type: DataTypes.INTEGER,
         allowNull: false
     }

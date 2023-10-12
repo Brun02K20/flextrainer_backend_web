@@ -14,11 +14,7 @@ const usuariosAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    correoElectronico: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    fechaDeNacimiento: {
+    fechaNacimiento: {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
@@ -26,15 +22,15 @@ const usuariosAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    correoElectronico: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    idRol: {
+    esActivo: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    dniCliente: {
+    idRol: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
@@ -42,7 +38,10 @@ const usuariosAttributes = {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 };
 
 const usuariosMethods = {

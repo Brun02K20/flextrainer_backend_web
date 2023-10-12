@@ -19,6 +19,6 @@ const rolesMethods = {
 const RolesModel = {
     rolesAttributes,
     rolesMethods
-};
+}
 
 export { RolesModel }

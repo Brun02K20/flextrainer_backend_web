@@ -6,12 +6,20 @@ const planesAttributes = {
         primaryKey: true,
         autoIncrement: true
     },
-    fechaInicio: {
-        type: DataTypes.DATEONLY,
+    nombre: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    fechaFin: {
-        type: DataTypes.DATEONLY,
+    idObjetivo: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    esActivo: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    dniProfesor: {
+        type: DataTypes.INTEGER,
         allowNull: false
     }
 };
