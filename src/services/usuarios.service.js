@@ -64,25 +64,33 @@ const insertUser = async (user) => {
     }
 }
 
-// anda
 const login = async (user) => {
-    const rdo = await sequelize.models.Usuarios.findOne({
-        where: {
-            dni: user.dni
-        }
-    })
+    try {
+        const rdo = await sequelize.models.Usuarios.findOne({
+            where: {
+                dni: user.dni
+            }
+        })
 
-    console.log("averigua el dni: ", rdo)
+        // console.log("averigua el usuario segun su dni: ", rdo.dataValues);
+        // console.log("password hasheado del usuario: ", rdo.dataValues.password);
+        // console.log("imprime el password que ingreso el usuario: ", user.password)
 
-    if (rdo) {
-        const same = bcrypt.compare(user.password, rdo.password)
-        if (same) {
-            return rdo.dataValues;
+        if (rdo) {
+            const same = await bcrypt.compare(user.password, rdo.dataValues.password)
+            console.log("same: ", same)
+            if (same) {
+                delete rdo.dataValues.password;
+                return rdo.dataValues;
+            } else {
+                return { error: 'No existe usuario con los datos ingresados' }
+            }
         } else {
             return { error: 'No existe usuario con los datos ingresados' }
         }
-    } else {
-        return { error: 'No existe usuario con los datos ingresados' }
+    } catch (error) {
+        console.error('Error en la comparación de contraseñas:', error);
+        return { error: 'Error en la autenticación' };
     }
 }
 
