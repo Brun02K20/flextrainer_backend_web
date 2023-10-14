@@ -41,6 +41,10 @@ const usuariosAttributes = {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    genero: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 };
 

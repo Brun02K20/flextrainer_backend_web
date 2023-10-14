@@ -51,6 +51,10 @@ sequelize.models.Planes.belongsTo(sequelize.models.Objetivos, { foreignKey: 'idO
 sequelize.models.Usuarios.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Planes_Alumnos, foreignKey: 'dniAlumno' });
 sequelize.models.Planes.belongsToMany(sequelize.models.Usuarios, { through: sequelize.models.Planes_Alumnos, foreignKey: 'idPlan' });
 
+//probando una cosa
+sequelize.models.Planes_Alumnos.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' })
+sequelize.models.Planes_Alumnos.belongsTo(sequelize.models.Usuarios, { foreignKey: 'dniAlumno' })
+
 // FK de la tabla sesiones que apunta al id de la tabla planes
 sequelize.models.Sesiones.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' });
 
