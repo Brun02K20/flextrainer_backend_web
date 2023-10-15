@@ -13,6 +13,10 @@ const maquinasAttributes = {
     peso: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    esActivo: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 };
 
