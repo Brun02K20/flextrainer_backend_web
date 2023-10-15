@@ -8,9 +8,10 @@ import { errorHandler } from "./middlewares/error-handler-middleware.js";
 import { usuariosRouter } from "./routes/usuarios.routes.js";
 import { planesAlumnosRouter } from "./routes/planesAlumnos.routes.js";
 
+// creando la aplicacion express
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors()); // configurando cors para que un cliente frontend pueda hacer peticiones a la api
 
 // crear los middlewares de uso
 app.use('/flextrainer/usuarios', usuariosRouter.router);

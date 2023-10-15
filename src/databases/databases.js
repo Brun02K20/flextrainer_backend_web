@@ -15,7 +15,7 @@ import { VideosModel } from "../models/Videos.js";
 import { ObjetivosModel } from "../models/Objetivos.js";
 
 
-// creando DB usando dialecto MySQL
+// creando DB usando dialecto MySQL, objeto de conexion 
 const sequelize = new Sequelize({
     dialect: "mysql",
     host: "200.80.43.108",
@@ -50,8 +50,6 @@ sequelize.models.Planes.belongsTo(sequelize.models.Objetivos, { foreignKey: 'idO
 // Relación N a N entre Alumnos y Planes a través de PlanesAlumnos
 sequelize.models.Usuarios.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Planes_Alumnos, foreignKey: 'dniAlumno' });
 sequelize.models.Planes.belongsToMany(sequelize.models.Usuarios, { through: sequelize.models.Planes_Alumnos, foreignKey: 'idPlan' });
-
-//probando una cosa
 sequelize.models.Planes_Alumnos.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' })
 sequelize.models.Planes_Alumnos.belongsTo(sequelize.models.Usuarios, { foreignKey: 'dniAlumno' })
 
