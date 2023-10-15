@@ -72,6 +72,9 @@ sequelize.models.Planes.belongsToMany(sequelize.models.Ejercicios, { through: se
 sequelize.models.Sesiones.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idSesion' });
 sequelize.models.Planes.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idPlan' });
 
+sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Ejercicios, { foreignKey: 'idEjercicio' });
+sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' });
+sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Sesiones, { foreignKey: 'idSesion' });
 
 // conexion a la BD
 try {
