@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize"; // importando el framework de ORM
 
 // importando los modelos (las entidades del negocio)
+//holis
 import { UsuariosModel } from "../models/Usuarios.js";
 import { RolesModel } from "../models/Roles.js";
 import { PlanesModel } from "../models/Planes.js";
