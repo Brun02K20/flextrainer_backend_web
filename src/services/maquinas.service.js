@@ -18,27 +18,40 @@ const getAll = async () => {
 const getMaquinaById = async (id) => {
     const rdo = await sequelize.models.Maquinas.findByPk(id);
     if (rdo) {
-        const ejercicios = await sequelize.models.Ejercicios.findAll({
+        const ejercicios = await sequelize.models.Ejercicios_Maquinas.findAll({
             where: {
                 idMaquina: id
             },
             include: [
                 {
-                    model: sequelize.models.Cuerpo_Zonas,
-                    attributes: ['nombre']
-                },
-                {
-                    model: sequelize.models.Categoria_Ejercicios,
-                    attributes: ['nombre']
+                    model: sequelize.models.Ejercicios,
+                    include: [
+                        {
+                            model: sequelize.models.Categoria_Ejercicios,
+                            attributes: ['nombre']
+                        },
+                        {
+                            model: sequelize.models.Tipo_Ejercicios,
+                            attributes: ['nombre']
+                        },
+                        {
+                            model: sequelize.models.Cuerpo_Zonas,
+                            attributes: ['nombre']
+                        },
+                        // {
+                        //     model: sequelize.models.Videos,
+                        //     attributes: ['nombre', 'url']
+                        // },
+                    ]
                 },
             ]
         });
 
         rdo.dataValues.ejercicios = ejercicios.map(e => {
-            e.dataValues.nombreZonaCuerpo = e.dataValues.Cuerpo_Zona.nombre;
-            e.dataValues.nombreCategoria = e.dataValues.Categoria_Ejercicio.nombre;
-            delete e.dataValues.Cuerpo_Zona;
-            delete e.dataValues.Categoria_Ejercicio;
+            e.dataValues.Ejercicio.nombreZonaCuerpo = e.dataValues.Ejercicio.Cuerpo_Zona.nombre;
+            e.dataValues.Ejercicio.nombreCategoria = e.dataValues.Ejercicio.Categoria_Ejercicio.nombre;
+            delete e.dataValues.Ejercicio.Cuerpo_Zona;
+            delete e.dataValues.Ejercicio.Categoria_Ejercicio;
             return e.dataValues
         })
         return rdo.dataValues

@@ -22,13 +22,13 @@ const ejerciciosAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    idMaquina: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
     idVideo: {
         type: DataTypes.INTEGER,
         allowNull: true
+    },
+    idTipo: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 };
 

@@ -13,6 +13,8 @@ import { MaquinasModel } from "../models/Maquinas.js";
 import { CuerpoZonasModel } from "../models/Cuerpo_Zonas.js";
 import { VideosModel } from "../models/Videos.js";
 import { ObjetivosModel } from "../models/Objetivos.js";
+import { TipoEjerciciosModel } from "../models/Tipo_Ejercicios.js";
+import { EjerciciosMaquinasModel } from "../models/Ejercicios_Maquinas.js";
 
 
 // creando DB usando dialecto MySQL, objeto de conexion 
@@ -37,6 +39,8 @@ sequelize.define('Cuerpo_Zonas', CuerpoZonasModel.cuerpoZonasAttributes, CuerpoZ
 sequelize.define('Maquinas', MaquinasModel.maquinasAttributes, MaquinasModel.maquinasMethods);
 sequelize.define('Videos', VideosModel.videosAttributes, VideosModel.videosMethods);
 sequelize.define('Objetivos', ObjetivosModel.objetivosAttributes, ObjetivosModel.objetivosMethods);
+sequelize.define('Tipo_Ejercicios', TipoEjerciciosModel.tipoEjerciciosAttributes, TipoEjerciciosModel.tipoEjerciciosMethods);
+sequelize.define('Ejercicios_Maquinas', EjerciciosMaquinasModel.ejerciciosMaquinasAttributes, EjerciciosMaquinasModel.ejerciciosMaquinasMethods);
 
 // DECLARACIONES DE FKs: 
 // FK de los usuarios: seran 2, una de autoreferencia (dniEntrenador), y la otra apuntara al id de la tabla de Roles
@@ -59,8 +63,8 @@ sequelize.models.Sesiones.belongsTo(sequelize.models.Planes, { foreignKey: 'idPl
 // FKs de la tabla de ejercicios, las cuales son todas relaciones 1 a 1 en la base de datos: 
 sequelize.models.Ejercicios.belongsTo(sequelize.models.Categoria_Ejercicios, { foreignKey: 'idCategoriaEjercicio' });
 sequelize.models.Ejercicios.belongsTo(sequelize.models.Cuerpo_Zonas, { foreignKey: 'idZonaCuerpo' });
-sequelize.models.Ejercicios.belongsTo(sequelize.models.Maquinas, { foreignKey: 'idMaquina' });
 sequelize.models.Ejercicios.belongsTo(sequelize.models.Videos, { foreignKey: 'idVideo' });
+sequelize.models.Ejercicios.belongsTo(sequelize.models.Tipo_Ejercicios, { foreignKey: 'idTipo' });
 
 // FKS de la tabla triple Sesion_Ejercicios
 sequelize.models.Ejercicios.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idEjercicio' });
@@ -75,6 +79,10 @@ sequelize.models.Planes.belongsToMany(sequelize.models.Sesiones, { through: sequ
 sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Ejercicios, { foreignKey: 'idEjercicio' });
 sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' });
 sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Sesiones, { foreignKey: 'idSesion' });
+
+// FKs para la tabla intermedia entre ejercicios y maquinas
+sequelize.models.Ejercicios_Maquinas.belongsTo(sequelize.models.Ejercicios, { foreignKey: 'idEjercicio' });
+sequelize.models.Ejercicios_Maquinas.belongsTo(sequelize.models.Maquinas, { foreignKey: 'idMaquina' });
 
 // conexion a la BD
 try {

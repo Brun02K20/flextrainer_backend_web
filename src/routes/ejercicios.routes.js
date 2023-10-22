@@ -12,5 +12,14 @@ router.get('/ejercicio/:id', async (req, res, next) => {
     }
 })
 
+router.get('/byZC/:id', async (req, res, next) => {
+    try {
+        const rdo = await ejerciciosServices.getEjerciciosByZonaCuerpo(req.params.id);
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
 const ejerciciosRouter = { router }
 export { ejerciciosRouter }
