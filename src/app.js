@@ -11,6 +11,7 @@ import { maquinasRouter } from "./routes/maquinas.routes.js";
 import { ejerciciosRouter } from "./routes/ejercicios.routes.js";
 import { objetivosRouter } from "./routes/objetivos.routes.js";
 import { cuerpoZonasRouter } from "./routes/cuerpoZonas.routes.js";
+import { planesRouter } from "./routes/planes.routes.js";
 
 // creando la aplicacion express
 const app = express();
@@ -24,6 +25,7 @@ app.use('/flextrainer/maquinas', maquinasRouter.router);
 app.use('/flextrainer/ejercicios', ejerciciosRouter.router);
 app.use('/flextrainer/objetivos', objetivosRouter.router);
 app.use('/flextrainer/cuerpoZonas', cuerpoZonasRouter.router);
+app.use('/flextrainer/planes', planesRouter.router);
 
 // si ocurre algun error, directamente se ejecuta este middleware
 app.use(errorHandler);

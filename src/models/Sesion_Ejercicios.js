@@ -16,6 +16,22 @@ const sesionEjerciciosAttributes = {
         allowNull: false,
         field: 'idSesion'
     },
+    tiempo: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    series: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    repeticiones: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    descanso: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    }
 };
 
 const sesionEjerciciosMethods = {

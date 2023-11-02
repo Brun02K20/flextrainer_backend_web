@@ -10,21 +10,21 @@ const categoriaEjerciciosAttributes = {
         type: DataTypes.STRING,
         allowNull: false
     },
-    tiempo: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+    tieneTiempo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     },
-    series: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+    tieneSeries: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     },
-    repeticiones: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+    tieneRepeticiones: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     },
-    descanso: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+    tieneDescanso: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     }
 };
 
