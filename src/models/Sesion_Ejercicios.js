@@ -35,7 +35,8 @@ const sesionEjerciciosAttributes = {
 };
 
 const sesionEjerciciosMethods = {
-    timestamps: false
+    timestamps: false,
+    autoIncrement: false // Esto evita que se incluya la columna `id` en la inserción
 };
 
 const SesionEjerciciosModel = {

@@ -67,14 +67,14 @@ sequelize.models.Ejercicios.belongsTo(sequelize.models.Videos, { foreignKey: 'id
 sequelize.models.Ejercicios.belongsTo(sequelize.models.Tipo_Ejercicios, { foreignKey: 'idTipo' });
 
 // FKS de la tabla triple Sesion_Ejercicios
-sequelize.models.Ejercicios.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idEjercicio' });
-sequelize.models.Sesiones.belongsToMany(sequelize.models.Ejercicios, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idSesion' });
+// sequelize.models.Ejercicios.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idEjercicio' });
+// sequelize.models.Sesiones.belongsToMany(sequelize.models.Ejercicios, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idSesion' });
 
-sequelize.models.Ejercicios.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idEjercicio' });
-sequelize.models.Planes.belongsToMany(sequelize.models.Ejercicios, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idPlan' });
+// sequelize.models.Ejercicios.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idEjercicio' });
+// sequelize.models.Planes.belongsToMany(sequelize.models.Ejercicios, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idPlan' });
 
-sequelize.models.Sesiones.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idSesion' });
-sequelize.models.Planes.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idPlan' });
+// sequelize.models.Sesiones.belongsToMany(sequelize.models.Planes, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idSesion' });
+// sequelize.models.Planes.belongsToMany(sequelize.models.Sesiones, { through: sequelize.models.Sesion_Ejercicios, foreignKey: 'idPlan' });
 
 sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Ejercicios, { foreignKey: 'idEjercicio' });
 sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Planes, { foreignKey: 'idPlan' });
@@ -83,6 +83,9 @@ sequelize.models.Sesion_Ejercicios.belongsTo(sequelize.models.Sesiones, { foreig
 // FKs para la tabla intermedia entre ejercicios y maquinas
 sequelize.models.Ejercicios_Maquinas.belongsTo(sequelize.models.Ejercicios, { foreignKey: 'idEjercicio' });
 sequelize.models.Ejercicios_Maquinas.belongsTo(sequelize.models.Maquinas, { foreignKey: 'idMaquina' });
+
+sequelize.models.Ejercicios.belongsToMany(sequelize.models.Maquinas, { through: sequelize.models.Ejercicios_Maquinas, foreignKey: 'idEjercicio' });
+sequelize.models.Maquinas.belongsToMany(sequelize.models.Ejercicios, { through: sequelize.models.Ejercicios_Maquinas, foreignKey: 'idMaquina' });
 
 // conexion a la BD
 try {

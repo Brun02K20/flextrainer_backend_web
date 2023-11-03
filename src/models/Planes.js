@@ -21,6 +21,10 @@ const planesAttributes = {
     dniProfesor: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    observaciones: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 };
 
