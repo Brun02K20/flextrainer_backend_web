@@ -62,6 +62,15 @@ router.put("/desAsociarAlumnoDeProfe/:dniAlumno", async (req, res, next) => {
     }
 })
 
+router.post('/asignarPlanAAlumno', async (req, res, next) => {
+    try {
+        const rdo = await planesAlumnosServices.asignarPlanAAlumno(req.body)
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
 // creo el objeto que envuelve al router
 const planesAlumnosRouter = {
     router

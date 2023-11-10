@@ -290,6 +290,27 @@ const deleteAlumnoProfe = async (dniAlumno) => {
 
 }
 
+const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, idPlan, observaciones, fechaInicio, fechaFin. Validaciones en el front
+
+    console.log("dniAlumno: ", body.dniAlumno)
+    console.log("idPlan: ", body.idPlan)
+
+    try {
+        const nuevoRegistro = await sequelize.models.Planes_Alumnos.create({
+            dniAlumno: body.dniAlumno,
+            idPlan: body.idPlan,
+            fechaInicio: body.fechaInicio,
+            fechaFin: body.fechaFin,
+            observaciones: body.observaciones || null
+        })
+
+        // nota: en el frontend, las fechas las formatearemos a: año-mes-dia
+        return nuevoRegistro.dataValues;
+    } catch (error) {
+        console.log("ERROR AL CREAR LA INSERCION INTERMEDIA: ", error)
+    }
+}
+
 
 // declaro los servicios a exportar
 const planesAlumnosServices = {
@@ -298,7 +319,8 @@ const planesAlumnosServices = {
     findAlumnosByProfe,
     findAlumnosByProfeByFilters,
     findAlumnoEspecificoDeProfe,
-    deleteAlumnoProfe
+    deleteAlumnoProfe,
+    asignarPlanAAlumno
 }
 
 export { planesAlumnosServices }

@@ -3,12 +3,12 @@ import { DataTypes } from "sequelize";
 const planesAlumnosAttributes = {
     Usuariodni: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         field: 'dniAlumno'
     },
     Planeid: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         field: 'idPlan'
     },
     fechaInicio: {
