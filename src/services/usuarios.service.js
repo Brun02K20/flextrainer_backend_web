@@ -14,6 +14,13 @@ const getAll = async () => {
             {
                 model: sequelize.models.Roles,
                 attributes: ['nombre']
+            },
+            {
+                model: sequelize.models.Usuarios, // Incluye el modelo Usuarios
+                as: 'Usuario', // Utiliza el alias definido en la asociación
+                attributes: {
+                    exclude: ['password']
+                },
             }
         ],
         where: { // que sea activo en la BD
@@ -173,6 +180,13 @@ const getUserByFilters = async (body) => {
             {
                 model: sequelize.models.Roles,
                 attributes: ['nombre']
+            },
+            {
+                model: sequelize.models.Usuarios, // Incluye el modelo Usuarios
+                as: 'Usuario', // Utiliza el alias definido en la asociación
+                attributes: {
+                    exclude: ['password']
+                },
             }
         ],
     })
@@ -250,6 +264,22 @@ const asignarRolYProfe = async (bodyParams) => {
     return rdo.dataValues; // devolver los datos del usuario actualizado
 }
 
+const asignarSoloProfe = async (bodyParams) => {
+    const rdo = await sequelize.models.Usuarios.findOne({ // buscar usuario que tenga el dni pasado por parametro
+        where: {
+            dni: bodyParams.dniUser
+        }
+    })
+
+    if (!rdo) { // si no existe usuario, devolver el error
+        return { error: 'No existe el usuario con este dni' }
+    }
+
+    rdo.dniEntrenador = bodyParams.entrenador;
+    await rdo.save() // guardar los cambios
+    return rdo.dataValues; // devolver los datos del usuario actualizado
+}
+
 // actualizar el usuario
 const updateUser = async (body) => {
     try {
@@ -319,6 +349,7 @@ const usuariosServices = {
     updateUser,
     activateUser,
     getCoachesActivos,
+    asignarSoloProfe
 }
 
 export { usuariosServices }

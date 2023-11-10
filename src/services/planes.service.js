@@ -252,6 +252,12 @@ const deletePlan = async (idPlan) => {
         return { error: 'No existe el plan que se desea borrar' }
     }
 
+    await sequelize.models.Planes_Alumnos.destroy({
+        where: {
+            Planeid: planToDelete.id
+        }
+    })
+
     planToDelete.esActivo = 0; // si lo hay, actualiza su estado de actividad a 0, dandolo de baja de forma logica
     await planToDelete.save(); // guarda el cambio del atributo
     return { message: 'Plan borrado exitosamente' } // devuelve el mensaje de que se borro exitosamente

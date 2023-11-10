@@ -22,10 +22,7 @@ const planesAttributes = {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    observaciones: {
-        type: DataTypes.STRING,
-        allowNull: true
-    }
+
 };
 
 const planesMethods = {

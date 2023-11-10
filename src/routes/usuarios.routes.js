@@ -119,6 +119,15 @@ router.get('/entrenadoresActivos', async (req, res, next) => {
     }
 })
 
+router.put('/usuario/asignarProfe', async (req, res, next) => {
+    try {
+        const rdo = await usuariosServices.asignarSoloProfe(req.body);
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
 // almaceno el router creado dentro de un objeto, esto para su posterior uso en las declaraciones
 // de los middlewares de la api, que estan ubicadas en el archivo app.js, son los 
 // app.use('url', talRouter.router)

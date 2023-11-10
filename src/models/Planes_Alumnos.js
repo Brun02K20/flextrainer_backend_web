@@ -18,6 +18,10 @@ const planesAlumnosAttributes = {
     fechaFin: {
         type: DataTypes.DATEONLY,
         allowNull: false
+    },
+    observaciones: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 };
 
