@@ -312,6 +312,33 @@ const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, 
 }
 
 
+const getDetallePlanParaAlumno = async (dniAlumno) => {
+    const rdo = await sequelize.models.Planes_Alumnos.findOne({
+        where: {
+            Usuariodni: dniAlumno
+        }
+    })
+
+    if (!rdo) {
+        return { error: 'ERROR XD' }
+    }
+
+    console.log("----------id plan obtenido-----------")
+    console.log(rdo.idPlan)
+
+    const planDetail = await planesService.getDetallePlan(rdo.idPlan)
+
+    if (!planDetail) {
+        return { error: 'ERROR XD' }
+    }
+
+    return { detallePlan: planDetail, aspectosBasicos: rdo }
+}
+
+
+
+
+
 // declaro los servicios a exportar
 const planesAlumnosServices = {
     getAll,
@@ -320,7 +347,8 @@ const planesAlumnosServices = {
     findAlumnosByProfeByFilters,
     findAlumnoEspecificoDeProfe,
     deleteAlumnoProfe,
-    asignarPlanAAlumno
+    asignarPlanAAlumno,
+    getDetallePlanParaAlumno
 }
 
 export { planesAlumnosServices }

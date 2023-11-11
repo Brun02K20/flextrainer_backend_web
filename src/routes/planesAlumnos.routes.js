@@ -71,6 +71,16 @@ router.post('/asignarPlanAAlumno', async (req, res, next) => {
     }
 })
 
+router.get('/planDeAlumno/:dniAlumno', async (req, res, next) => {
+    try {
+        const rdo = await planesAlumnosServices.getDetallePlanParaAlumno(req.params.dniAlumno);
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 // creo el objeto que envuelve al router
 const planesAlumnosRouter = {
     router

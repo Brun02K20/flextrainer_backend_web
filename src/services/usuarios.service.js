@@ -286,6 +286,9 @@ const updateUser = async (body) => {
         const rdo = await sequelize.models.Usuarios.findOne({ // busca un usuario con el dni indicado
             where: {
                 dni: body.dniOriginal
+            },
+            attributes: {
+                exclude: ['password']
             }
         })
 
@@ -311,7 +314,7 @@ const updateUser = async (body) => {
         console.log("nuevo dni: ", rdo.dni);
 
         await rdo.save(); // guarda el resultado
-        return rdo.dataValues; // devuelve el usuario actualizado
+        return rdo; // devuelve el usuario actualizado
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
             // Manejar el error de restricción única, de mail o de telefono

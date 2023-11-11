@@ -201,10 +201,11 @@ const getDetallePlan = async (idPlan) => {
                                 model: sequelize.models.Cuerpo_Zonas,
                                 attributes: ['nombre'],
                             },
-                            // {
-                            //     model: sequelize.models.Videos,
-                            //     attributes: ['id', 'nombre', 'url'],
-                            // },
+                            {
+                                model: sequelize.models.Videos, // Incluye el modelo de Videos asociado al ejercicio
+                                attributes: ['id', 'nombre', 'url'],
+                                required: false, // Esto manejará los ejercicios sin video asociado
+                            },
                             {
                                 model: sequelize.models.Maquinas, // Incluye el modelo Maquinas
                                 through: { attributes: [] }, // No incluye atributos de la relación Ejercicios_Maquinas
