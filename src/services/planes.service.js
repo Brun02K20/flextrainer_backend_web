@@ -38,23 +38,23 @@ const getPlanesByProfesor = async (dniProfe) => {
 
 // obtener los planes del profe segun filtros:
 const getPlanesByProfeByFilters = async (body, dniProfe) => {
-    const { nombre, idObjetivo, dadosBaja, cantSesiones } = body; // desestructuro el objeto
+    const { nombre, objetivo, dadosBaja, cantSesiones } = body; // desestructuro el objeto
 
     const whereCondition = {}; // declaro un objeto vacio que va a almacenar las condiciones de los filtros dinamicamente
 
-    if (!nombre && !idObjetivo && !cantSesiones && dadosBaja === 1) {
+    if (!nombre && !objetivo && !cantSesiones && dadosBaja === 1) {
         // si viene sin filtros, devuelve el rdo de la ejecucion del getAll()
         console.log("que mierda pasa filtros: ", dniProfe)
         return await getPlanesByProfesor(dniProfe)
     }
 
     if (nombre) { // si hay un nombre, que almacene el filtro. funciona
-        whereCondition.nombre = { [Op.like]: `%${nombre}%` }
+        whereCondition.nombre = { [Op.like]: `%${nombre.toLowerCase()}%` }
         console.log("nombre parseado: ", nombre.toLowerCase())
     }
 
-    if (idObjetivo) { // funciona
-        whereCondition.idObjetivo = idObjetivo;
+    if (objetivo) { // funciona
+        whereCondition.idObjetivo = objetivo;
     }
 
     if (cantSesiones) {
@@ -109,7 +109,7 @@ const getPlanesByProfeByFilters = async (body, dniProfe) => {
 const createPlan = async (plan) => {
     try {
         const nuevoPlan = await sequelize.models.Planes.create({
-            nombre: plan.nombre,
+            nombre: plan.nombre.toLowerCase(),
             esActivo: 1,
             dniProfesor: plan.dniProfesor,
             idObjetivo: plan.objetivo,

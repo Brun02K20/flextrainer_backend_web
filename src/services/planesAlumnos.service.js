@@ -55,12 +55,12 @@ const getPlanesAlumnosByFilters = async (body) => {
     };
 
     if (nombre) { // si hay un nombre, que almacene el filtro
-        whereCondition.nombre = { [Op.like]: `%${nombre}%` }
+        whereCondition.nombre = { [Op.like]: `%${nombre.toLowerCase()}%` }
         console.log("nombre parseado: ", nombre.toLowerCase())
     }
 
     if (apellido) { // si hay un apellido, que almacene el filtro
-        whereCondition.apellido = { [Op.like]: `%${apellido}%` }
+        whereCondition.apellido = { [Op.like]: `%${apellido.toLowerCase()}%` }
         console.log("apellido parseado: ", apellido.toLowerCase())
     }
 
@@ -286,8 +286,6 @@ const deleteAlumnoProfe = async (dniAlumno) => {
     await alumno.save()
     return alumno.dataValues
 
-    // 2do borrar todos los registros de Planes_Alumnos que tengan ese dniAlumno
-
 }
 
 const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, idPlan, observaciones, fechaInicio, fechaFin. Validaciones en el front
@@ -304,7 +302,7 @@ const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, 
             observaciones: body.observaciones || null
         })
 
-        // nota: en el frontend, las fechas las formatearemos a: año-mes-dia
+        // nota: en el frontend, las fechas las formatearemos a: año-mes-dia en el front
         return nuevoRegistro.dataValues;
     } catch (error) {
         console.log("ERROR AL CREAR LA INSERCION INTERMEDIA: ", error)
