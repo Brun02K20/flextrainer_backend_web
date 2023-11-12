@@ -51,8 +51,8 @@ const insertUser = async (user) => {
 
         const rdo = await sequelize.models.Usuarios.create({ // crear el usuario
             dni: user.dni,
-            nombre: user.nombre,
-            apellido: user.apellido,
+            nombre: user.nombre.toLowerCase(),
+            apellido: user.apellido.toLowerCase(),
             fechaNacimiento: user.fechaNacimiento,
             numeroTelefono: user.numeroTelefono,
             correoElectronico: user.correoElectronico,
@@ -216,7 +216,14 @@ const deleteUser = async (dni) => {
         return { error: 'No existe el usuario que se desea borrar' }
     }
 
+    await sequelize.models.Planes_Alumnos.destroy({
+        where: {
+            Usuariodni: userToDelete.dni
+        }
+    })
+
     userToDelete.esActivo = 0; // si lo hay, actualiza su estado de actividad a 0, dandolo de baja de forma logica
+    userToDelete.dniEntrenador = null;
     await userToDelete.save(); // guarda el cambio del atributo
     return { message: 'Usuario borrado exitosamente' } // devuelve el mensaje de que se borro exitosamente
 }
@@ -304,8 +311,8 @@ const updateUser = async (body) => {
         const dniMod = body.dni
         console.log("dniMod: ", dniMod)
         rdo.dni = dniMod;
-        rdo.nombre = body.nombre;
-        rdo.apellido = body.apellido;
+        rdo.nombre = body.nombre.toLowerCase();
+        rdo.apellido = body.apellido.toLowerCase();
         rdo.fechaNacimiento = body.fechaNacimiento;
         rdo.genero = body.genero;
         rdo.correoElectronico = body.correoElectronico;

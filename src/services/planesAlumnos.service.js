@@ -293,7 +293,17 @@ const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, 
     console.log("dniAlumno: ", body.dniAlumno)
     console.log("idPlan: ", body.idPlan)
 
+
+
     try {
+        // si existe un Plan_Alumno con el dniAlumno, borrar ese registro
+
+        await sequelize.models.Planes_Alumnos.destroy({
+            where: {
+                dniAlumno: body.dniAlumno
+            }
+        })
+
         const nuevoRegistro = await sequelize.models.Planes_Alumnos.create({
             dniAlumno: body.dniAlumno,
             idPlan: body.idPlan,
