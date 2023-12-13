@@ -17,6 +17,14 @@ const maquinasAttributes = {
     esActivo: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    urlFoto: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    marca: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 };
 
