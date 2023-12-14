@@ -128,6 +128,29 @@ router.put('/usuario/asignarProfe', async (req, res, next) => {
     }
 })
 
+
+// endpoint para obtenere un usuario segun mail, telefono, y dni, para poder validar 
+// que exista para la recuperacion de la contraseña
+router.get("/usuario/getRecover/:dni/:mail/:phone", async (req, res, next) => {
+    try {
+        const rdo = await usuariosServices.getUserByDniMailandPhone(req.params.dni, req.params.mail, req.params.phone)
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
+// endpoint para la actualizacion de un password
+router.put("/usuario/recover/:dni/:password", async (req, res, next) => {
+    try {
+        const rdo = await usuariosServices.updatePassword(req.params.dni, req.params.password)
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 // almaceno el router creado dentro de un objeto, esto para su posterior uso en las declaraciones
 // de los middlewares de la api, que estan ubicadas en el archivo app.js, son los 
 // app.use('url', talRouter.router)

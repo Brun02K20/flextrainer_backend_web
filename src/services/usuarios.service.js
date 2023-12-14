@@ -1,6 +1,7 @@
 import sequelize from "../databases/databases.js"; // importo las definiciones de los modelos
 import { Op } from "sequelize"; // importo las funcionalidades de operaciones de bases de datos
 import bcrypt from 'bcrypt'; // importo bcrypt para el hasheo de contraseñas
+import { enviarCorreo } from "../email.js";
 
 // Los servicios, para cada modelo, en escencia, son la capa de la logica de negocio de la aplicacion. 
 // Como por ejemplo, buscar, crear, modificar, borrar, calcular, encriptar, y demas. 
@@ -32,6 +33,8 @@ const getAll = async () => {
     });
 
     console.log("cant registros devueltos: ", rdo.length)
+
+    await enviarCorreo("bvirinni@gmail.com", "SEXO", "SEXO", "info@flextrainer.com.ar", "Bruno2023!")
 
     return rdo.map(e => {
         const user = e.dataValues;
@@ -347,6 +350,53 @@ const getCoachesActivos = async () => {
     return rdo.map(e => e.dataValues)
 };
 
+/// obtener un usuario en base a dni, mail, y celular
+const getUserByDniMailandPhone = async (dni, mail, phone) => {
+    const rdo = await sequelize.models.Usuarios.findOne({
+        where: {
+            dni: dni,
+            numeroTelefono: phone,
+            correoElectronico: mail
+        },
+        attributes: {
+            exclude: ["password"]
+        }
+    })
+
+    if (!rdo) {
+        return { error: "No existe una cuenta con la información ingresada." }
+    }
+
+    return rdo.dataValues
+}
+
+// servicio para la actualizacion de la contraseña
+const updatePassword = async (dni, password) => {
+    const usuarioAActualizar = await sequelize.models.Usuarios.findOne({
+        where: {
+            dni: dni
+        }
+    })
+
+    console.log("usuario hallado: ", usuarioAActualizar)
+
+    const same = await bcrypt.compare(password, usuarioAActualizar.dataValues.password)
+    console.log("same: ", same)
+    if (!same) { // si son iguales, devuelve el usuario
+        console.log("nueva password: ", password)
+        const haseado = await bcrypt.hash(password, 10); // hashear el password
+        usuarioAActualizar.password = haseado;
+        await usuarioAActualizar.save()
+
+        delete usuarioAActualizar.dataValues.password;
+        return usuarioAActualizar.dataValues;
+        // si no, se ejecuta el error correspondiente
+    } else {
+        return { esIgual: 'La nueva contraseña no puede ser igual a la anterior' }
+    }
+}
+
+
 // declaro los servicios a exportar
 const usuariosServices = {
     getAll,
@@ -359,7 +409,9 @@ const usuariosServices = {
     updateUser,
     activateUser,
     getCoachesActivos,
-    asignarSoloProfe
+    asignarSoloProfe,
+    getUserByDniMailandPhone,
+    updatePassword
 }
 
 export { usuariosServices }
