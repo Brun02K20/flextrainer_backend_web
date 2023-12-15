@@ -177,6 +177,7 @@ const getDetallePlan = async (idPlan) => {
                 idPlan: idPlan
             },
             attributes: ['id', 'nombre'],
+            order: [['id', 'ASC']]
         });
 
         // Itera a través de las sesiones y busca los ejercicios asociados a cada una
@@ -283,6 +284,65 @@ const activatePlan = async (idPlan) => {
     return { message: 'plan reactivado exitosamente' } // devuelve el mensaje de que se activo correctamente
 }
 
+// servicio para actualizar un plan
+const updatePlan = async (plan) => {
+    try {
+        console.log("llgan los datos: ", plan)
+
+        // paso 1: eliminar todas las sesiones y sesion_ejecicios con el idPlan
+        await sequelize.models.Sesiones.destroy({ where: { idPlan: plan.id } });
+        await sequelize.models.Sesion_Ejercicios.destroy({ where: { idPlan: plan.id } });
+
+        // Paso 2: Actualizar la información del plan
+        await sequelize.models.Planes.update(
+            {
+                nombre: plan.nombre.toLowerCase(),
+                idObjetivo: plan.objetivo
+            },
+            {
+                where: {
+                    id: plan.id
+                }
+            }
+        );
+
+
+        // paso 3, iterar sobre las sesiones y los ejercicios para que se haga la nueva insrcion de stas
+        const sesiones = plan.sesiones;
+
+        for (const sesionData of sesiones) {
+            const nuevaSesion = await sequelize.models.Sesiones.create({
+                nombre: 'a',
+                idPlan: plan.id,
+            });
+
+            const ejercicios = sesionData.ejercicios;
+
+            for (const ejercicioData of ejercicios) {
+
+                console.log("-------------estoy en el de crear el detalle----------------")
+                console.log("idplan creado; ", plan.id)
+                console.log("idSesion creada", nuevaSesion.id)
+                // Crear una nueva entrada en la tabla "Sesion_Ejercicios"
+                await sequelize.models.Sesion_Ejercicios.create({
+                    Ejercicioid: ejercicioData.Ejercicioid || ejercicioData.id,
+                    Planeid: plan.id,
+                    Sesioneid: nuevaSesion.id,
+                    tiempo: ejercicioData.tiempoEjercicio || ejercicioData.tiempo || null,
+                    series: ejercicioData.seriesEjercicio || ejercicioData.series || null,
+                    repeticiones: ejercicioData.repsEjercicio || ejercicioData.repeticiones || null,
+                    descanso: ejercicioData.descanso || ejercicioData.descanso || null,
+                }, {
+                    fields: ['Ejercicioid', 'Planeid', 'Sesioneid', 'tiempo', 'series', 'repeticiones', 'descanso']
+                });
+            }
+        }
+
+    } catch (error) {
+        console.log("Error al actualizar plan: ", error)
+    }
+}
+
 const planesService = {
     getAll,
     getPlanesByProfesor,
@@ -290,7 +350,8 @@ const planesService = {
     getPlanesByProfeByFilters,
     getDetallePlan,
     deletePlan,
-    activatePlan
+    activatePlan,
+    updatePlan
 }
 
 export { planesService }

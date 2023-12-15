@@ -74,5 +74,15 @@ router.put('/plan/activate/:id', async (req, res, next) => {
     }
 })
 
+// endpoint para la actualizacion de un plan
+router.put("/plan/update", async (req, res, next) => {
+    try {
+        const rdo = await planesService.updatePlan(req.body)
+        return res.json(rdo)
+    } catch (error) {
+        next(error)
+    }
+})
+
 const planesRouter = { router }
 export { planesRouter }
