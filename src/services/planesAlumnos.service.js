@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import sequelize from "../databases/databases.js";
 import { planesService } from "./planes.service.js";
+import { enviarCorreo } from "../email.js";
 
 // obtener todos los planes con sus respectivos alumnos
 const getAll = async () => {
@@ -297,13 +298,13 @@ const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, 
 
     try {
         // si existe un Plan_Alumno con el dniAlumno, borrar ese registro
-
         await sequelize.models.Planes_Alumnos.destroy({
             where: {
                 dniAlumno: body.dniAlumno
             }
         })
 
+        // crear la nueva asignacion de plan
         const nuevoRegistro = await sequelize.models.Planes_Alumnos.create({
             dniAlumno: body.dniAlumno,
             idPlan: body.idPlan,
@@ -311,6 +312,20 @@ const asignarPlanAAlumno = async (body) => { // mi body voy a tener: dniAlumno, 
             fechaFin: body.fechaFin,
             observaciones: body.observaciones || null
         })
+
+        // enviar el email al alumno 
+        const usuarioANotificar = await sequelize.models.Usuarios.findOne({
+            where: {
+                dni: body.dniAlumno
+            },
+            attributes: ["nombre", "apellido", "correoElectronico"]
+        })
+
+        console.log("usuario a notificar: ", usuarioANotificar)
+
+        if (usuarioANotificar.correoElectronico === "bvirinni@gmail.com") {
+            await enviarCorreo(usuarioANotificar.correoElectronico, "ASIGNACIÓN DE PLAN", `Hola ${usuarioANotificar.nombre} ${usuarioANotificar.apellido}, te asignaron un nuevo plan de entrenamiento :D. Para poder verlo, ingresá a la aplicación y consultá en MI PLAN.`, "info@flextrainer.com.ar", "Bruno2023!")
+        }
 
         // nota: en el frontend, las fechas las formatearemos a: año-mes-dia en el front
         return nuevoRegistro.dataValues;

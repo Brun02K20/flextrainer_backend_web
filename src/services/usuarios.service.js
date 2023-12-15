@@ -34,8 +34,6 @@ const getAll = async () => {
 
     console.log("cant registros devueltos: ", rdo.length)
 
-    await enviarCorreo("bvirinni@gmail.com", "aaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaa", "info@flextrainer.com.ar", "Bruno2023!")
-
     return rdo.map(e => {
         const user = e.dataValues;
         if (user.Role && user.Role.nombre) {
@@ -267,6 +265,12 @@ const asignarRolYProfe = async (bodyParams) => {
 
     if (entrenador) { // si el body, tiene un atributo entrenador, que asigne el dniEntrenador del usuario, como el valor de entrenador, pasado por parametro
         rdo.dniEntrenador = entrenador
+
+        const trainer = await sequelize.models.Usuarios.findOne({ where: { dni: entrenador } })
+
+        if (rdo.correoElectronico === "bvirinni@gmail.com") {
+            await enviarCorreo(rdo.correoElectronico, "ASIGNACIÓN DE ENTRENADOR", `Hola ${rdo.nombre} ${rdo.apellido}, te asignaron un nuevo entrenador :D. Se llama: ${trainer.nombre} ${trainer.apellido}.`, "info@flextrainer.com.ar", "Bruno2023!")
+        }
     }
     rdo.idRol = rol // asignar el rol al usuario
     await rdo.save() // guardar los cambios
@@ -286,7 +290,15 @@ const asignarSoloProfe = async (bodyParams) => {
     }
 
     rdo.dniEntrenador = bodyParams.entrenador;
+
+
     await rdo.save() // guardar los cambios
+
+    const trainer = await sequelize.models.Usuarios.findOne({ where: { dni: bodyParams.entrenador } })
+
+    if (rdo.correoElectronico === "bvirinni@gmail.com") {
+        await enviarCorreo(rdo.correoElectronico, "ASIGNACIÓN DE ENTRENADOR", `Hola ${rdo.nombre} ${rdo.apellido}, te asignaron un nuevo entrenador :D. Se llama: ${trainer.nombre} ${trainer.apellido}.`, "info@flextrainer.com.ar", "Bruno2023!")
+    }
     return rdo.dataValues; // devolver los datos del usuario actualizado
 }
 
