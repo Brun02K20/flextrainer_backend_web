@@ -18,13 +18,13 @@ dotenv.config();
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDtx53EN4CFzRBXhAtkVIr4-4yjvsDKR2g",
-    authDomain: "flextrainer-8c7df.firebaseapp.com",
-    projectId: "flextrainer-8c7df",
-    storageBucket: "flextrainer-8c7df.appspot.com",
-    messagingSenderId: "911390932149",
-    appId: "1:911390932149:web:14c15445d6bf0cd91f12fc",
-    measurementId: "G-E5H47RG09E"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Inicializa Firebase
